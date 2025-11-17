@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>💖 ¡Nuestro Mes Mágico! 💖</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
 </head>
@@ -18,13 +18,15 @@
     <div class="background-animation"></div>
 
     <div id="intro-screen" class="intro-screen">
-        <div class="letter-envelope bounce-animation" onclick="openLetter()">
-            <div class="envelope-top"></div>
-            <div class="envelope-body">
+        <div class="letter-envelope" onclick="openLetter()">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap"></div>
+            <div class="envelope-content">
                 <p class="intro-text">Tienes una carta especial...</p>
-                <p class="click-prompt">(Haz clic para abrir)</p>
+                <p class="click-prompt">💖 (Haz clic para abrir) 💖</p>
             </div>
-            <div class="envelope-stamp">💖</div>
+            <div class="envelope-stamp pulse">✨</div>
+            <div class="envelope-front"></div>
         </div>
     </div>
     
@@ -39,7 +41,7 @@
         <div class="polaroid-container">
             <div class="polaroid rotate-left">
                 <img src="https://picsum.photos/200/200?random=1" alt="Nuestro Momento 1">
-                <p>Nuestra primera cita <br> (o un recuerdo especial)</p>
+                <p>Nuestra primera cita</p>
             </div>
             <div class="polaroid rotate-right">
                 <img src="https://picsum.photos/200/200?random=2" alt="Nuestro Momento 2">
@@ -65,9 +67,9 @@
         const music = document.getElementById('background-music');
 
         function typeWriterEffect() {
-            // El código del efecto máquina de escribir que ya teníamos
             const messageElement = document.querySelector('.message');
-            const originalText = messageElement.innerHTML;
+            // Usamos innerHTML para incluir el <br>
+            const originalText = messageElement.innerHTML; 
             messageElement.innerHTML = '';
             let i = 0;
             const speed = 50;
@@ -76,7 +78,7 @@
                 if (i < originalText.length) {
                     if (originalText.substring(i, i + 4) === '<br>') {
                         messageElement.innerHTML += '<br>';
-                        i += 4;
+                        i += 4; // Salta los 4 caracteres de <br>
                     } else {
                         messageElement.innerHTML += originalText.charAt(i);
                         i++;
@@ -88,36 +90,46 @@
         }
 
         function openLetter() {
-            // 1. Oculta la intro y muestra la carta
+            // Oculta la intro
             intro.classList.add('hide-intro');
-            card.classList.remove('hidden');
-            card.classList.add('fade-in');
-            
-            // 2. Inicia la música (debe ser después de una interacción del usuario)
-            music.play().catch(error => {
-                console.log("Error al reproducir la música: ", error);
-                // Si falla, el navegador puede haberlo bloqueado.
-                // En móviles, a menudo se requiere un segundo clic/tap.
-            });
-            
-            // 3. Inicia el efecto de escritura después de que la carta se abre
-            setTimeout(typeWriterEffect, 1000); 
+            // Activa la animación de apertura de la solapa
+            document.querySelector('.envelope-flap').classList.add('open');
 
-            // 4. Espera a que termine la animación de intro para removerla del flujo
             setTimeout(() => {
+                // Muestra la tarjeta principal
+                card.classList.remove('hidden');
+                card.classList.add('fade-in');
+                
+                // Inicia la música
+                music.play().catch(error => {
+                    console.log("Error al reproducir la música: ", error);
+                });
+                
+                // Inicia el efecto de escritura
+                setTimeout(typeWriterEffect, 1000); 
+                
+                // Oculta completamente la intro después de la transición
                 intro.style.display = 'none';
-            }, 1000); // Coincide con la duración de la transición CSS
+            }, 800); 
         }
 
         function triggerConfetti() {
-            var confettiSettings = { target: 'confetti-canvas' };
+            // Configuración del confeti más grande y denso
+            var confettiSettings = { 
+                target: 'confetti-canvas', 
+                max: 150, 
+                size: 1.8, 
+                props: ['circle', 'square', 'line'], 
+                colors: [[165,104,246],[230,61,135],[0,199,228],[255,255,255]], 
+                respawn: true 
+            };
             var confetti = new ConfettiGenerator(confettiSettings);
             confetti.render();
+            // Lo limpia después de 5 segundos
             setTimeout(() => {
                 confetti.clear();
-            }, 5000);
+            }, 5000); 
         }
-        
     </script>
 </body>
 </html>

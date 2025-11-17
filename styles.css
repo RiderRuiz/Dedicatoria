@@ -17,116 +17,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* CORRECCIÓN: Usamos min-height: 100vh para centrar, pero quitamos el overflow: hidden */
-    min-height: 100vh; 
     background: linear-gradient(135deg, #f7d9f7, #f0c4e4, #e0b0d5);
     position: relative;
     color: var(--text-color-dark);
 }
 
-/* --- ESTILOS DE LA INTRO (CARTA CERRADA) --- */
-.intro-screen {
-    position: fixed; /* Fija la intro sobre todo */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #f7d9f7, #f0c4e4, #e0b0d5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100; /* Asegura que esté por encima de todo */
-    transition: opacity 1s ease-out;
-}
-
-.hide-intro {
-    opacity: 0;
-}
-
-.letter-envelope {
-    cursor: pointer;
-    width: 300px;
-    height: 200px;
-    background-color: #ffffff;
-    border: 4px solid var(--primary-color);
-    border-radius: 10px;
-    box-shadow: 0 10px 30px var(--shadow-strong);
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-.envelope-top {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background-color: var(--primary-color);
-    clip-path: polygon(0 0, 100% 0, 50% 100%);
-    transition: all 0.5s ease;
-    z-index: 2;
-}
-
-.envelope-body {
-    text-align: center;
-    padding: 20px;
-    z-index: 1;
-}
-
-.intro-text {
-    font-family: 'Dancing Script', cursive;
-    font-size: 2em;
-    color: var(--accent-color);
-    margin: 0;
-}
-
-.click-prompt {
-    font-size: 0.9em;
-    color: #666;
-    margin-top: 5px;
-}
-
-.envelope-stamp {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 2em;
-    z-index: 3;
-    animation: pulse 2s infinite;
-}
-
-/* --- FIN ESTILOS DE LA INTRO --- */
-
-
-/* --- ESTILOS DEL CONTENIDO PRINCIPAL --- */
-.card {
-    /* Mantenemos el card centrado, pero permitimos el scroll del body */
-    background: linear-gradient(145deg, #ffffff, #f0f0f0);
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 15px 35px var(--shadow-strong);
-    max-width: 600px;
-    text-align: center;
-    border: 5px solid var(--primary-color);
-    position: relative;
-    z-index: 1;
-    margin: 50px auto; /* Asegura un margen superior/inferior si hay scroll */
-    transition: all 1s ease-out;
-}
-
-.hidden {
-    display: none;
-}
-
-/* El resto de los estilos del código anterior (fondo animado, corazón, título, etc.) */
-
-/* Animación de fondo con círculos */
+/* --- ANIMACIÓN DE FONDO --- */
 .background-animation {
-    position: fixed; /* Lo fijamos para que no se mueva con el scroll */
+    position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
@@ -135,23 +33,307 @@ body {
     z-index: 0;
 }
 
-/* (El resto de @keyframes moveCircles, .heart-icon, .title, .message, .polaroid-container, .signature, etc. deben ir aquí, son los mismos del código anterior, por eso no los repetí para no hacer la respuesta tan larga) */
-
-
-/* Animación de latido para el corazón */
-.beat-animation {
-    animation: heartbeat 1.5s infinite ease-in-out;
+.background-animation::before,
+.background-animation::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: moveCircles 20s infinite ease-in-out alternate;
 }
 
+.background-animation::before {
+    width: 300px;
+    height: 300px;
+    background-color: var(--secondary-color);
+    top: -50px;
+    left: -50px;
+    animation-delay: 0s;
+}
+
+.background-animation::after {
+    width: 400px;
+    height: 400px;
+    background-color: var(--primary-color);
+    bottom: -100px;
+    right: -100px;
+    animation-delay: 10s;
+}
+
+@keyframes moveCircles {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+    50% { transform: translate(100px, 50px) scale(1.1); opacity: 0.8; }
+    100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+}
+
+/* --- ESTILOS DE LA INTRO (CARTA CERRADA) --- */
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f7d9f7, #f0c4e4, #e0b0d5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    transition: opacity 0.8s ease-out;
+}
+
+.hide-intro {
+    opacity: 0;
+    pointer-events: none; 
+}
+
+.letter-envelope {
+    cursor: pointer;
+    width: 400px; 
+    height: 250px;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px var(--shadow-strong);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: bounce 2s infinite; 
+}
+
+.letter-envelope:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 15px 40px var(--shadow-strong);
+}
+
+.envelope-back {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ffffff;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* Altura de la solapa ajustada para que no corte el mensaje */
+    height: 30%; 
+    background-color: var(--primary-color);
+    /* Solapa recta que se pliega */
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); 
+    transform-origin: top;
+    transition: transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+    z-index: 3;
+    border-top-left-radius: 8px; 
+    border-top-right-radius: 8px;
+}
+
+.envelope-flap.open {
+    transform: rotateX(180deg);
+}
+
+.envelope-content {
+    position: absolute;
+    z-index: 2; 
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    /* Posicionamiento ajustado para que el texto se vea por debajo de la solapa */
+    top: 60%; 
+    transform: translateY(-50%); 
+}
+
+.intro-text {
+    font-family: 'Dancing Script', cursive;
+    /* Tamaño de fuente ligeramente reducido para caber */
+    font-size: 2.5em; 
+    color: var(--accent-color);
+    margin: 0 0 5px 0;
+    line-height: 1.2;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+.click-prompt {
+    font-size: 1.2em;
+    color: #666;
+    margin-top: 0;
+    font-weight: 600;
+}
+
+.envelope-stamp {
+    position: absolute;
+    top: 10px; 
+    right: 15px;
+    font-size: 2.8em; 
+    color: #fff;
+    z-index: 4;
+}
+
+/* --- ESTILOS DEL CONTENIDO PRINCIPAL (TARJETA) --- */
+.card {
+    background: linear-gradient(145deg, #ffffff, #f0f0f0);
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 15px 35px var(--shadow-strong);
+    /* Ancho principal ajustado para mejor centrado */
+    max-width: 800px; 
+    width: 90%;
+    margin: 50px auto; 
+    text-align: center;
+    border: 5px solid var(--primary-color);
+    position: relative;
+    z-index: 1;
+    transition: all 1s ease-out;
+    box-sizing: border-box;
+}
+
+.hidden {
+    display: none;
+}
+
+.heart-icon {
+    font-size: 4em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+}
+
+.title {
+    font-family: 'Dancing Script', cursive;
+    color: var(--accent-color);
+    margin-bottom: 25px;
+    font-size: 3.5em;
+    text-shadow: 2px 2px 5px var(--shadow-light);
+}
+
+.message {
+    color: var(--text-color-dark);
+    font-size: 1.2em;
+    line-height: 1.8;
+    margin-bottom: 40px;
+    font-weight: 400;
+}
+
+/* Animación de escritura para el mensaje */
+.typing-animation {
+    white-space: pre-wrap;
+    overflow: hidden;
+    border-right: .15em solid var(--primary-color);
+    animation: blink-caret .75s step-end infinite;
+    display: inline-block;
+    text-align: left;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary-color); }
+}
+
+/* Contenedor de las fotos estilo polaroid */
+.polaroid-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.polaroid {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 5px 5px 15px var(--shadow-strong);
+    padding: 10px 10px 20px 10px;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.polaroid:hover {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: 8px 8px 20px var(--shadow-strong);
+    z-index: 10;
+}
+
+.polaroid img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+.polaroid p {
+    font-size: 0.9em;
+    color: #555;
+    font-style: italic;
+    margin: 0;
+}
+
+.rotate-left {
+    transform: rotate(-5deg);
+}
+
+.rotate-right {
+    transform: rotate(7deg);
+}
+
+/* Botón de confeti */
+.confetti-button {
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border: none;
+    padding: 15px 30px;
+    border-radius: 30px;
+    font-size: 1.2em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px var(--shadow-light);
+    margin-bottom: 30px;
+}
+
+.confetti-button:hover {
+    background-color: var(--accent-color);
+    box-shadow: 0 8px 20px var(--shadow-strong);
+}
+
+.signature {
+    font-family: 'Dancing Script', cursive;
+    color: var(--primary-color);
+    font-size: 1.8em;
+    margin-top: 30px;
+    border-top: 2px dashed var(--secondary-color);
+    padding-top: 20px;
+    line-height: 1.3;
+}
+
+.date {
+    color: #888;
+    font-size: 1em;
+    margin-top: 15px;
+    font-weight: 300;
+}
+
+/* Estilos para el canvas de confeti */
+.confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+/* --- ANIMACIONES --- */
 @keyframes heartbeat {
     0% { transform: scale(1); }
     50% { transform: scale(1.15); }
     100% { transform: scale(1); }
-}
-
-/* Animación de rebote para el sobre */
-.bounce-animation {
-    animation: bounce 2s infinite;
 }
 
 @keyframes bounce {
@@ -160,14 +342,20 @@ body {
     60% { transform: translateY(-5px); }
 }
 
-/* Animación de pulso para la firma y el sello */
 @keyframes pulse {
     0% { transform: scale(1); opacity: 1; }
     50% { transform: scale(1.03); opacity: 0.9; }
     100% { transform: scale(1); opacity: 1; }
 }
 
-/* Animación inicial de la tarjeta */
+.heart-icon.beat-animation {
+    animation: heartbeat 1.5s infinite ease-in-out;
+}
+
+.signature.pulse {
+    animation: pulse 2s infinite ease-in-out;
+}
+
 .fade-in {
     animation: fadeIn 1.5s ease-out forwards;
     opacity: 0;
@@ -181,5 +369,108 @@ body {
     to {
         opacity: 1;
         transform: translateY(0) scale(1);
+    }
+}
+
+.slide-down {
+    animation: slideDown 1s ease-out 0.5s forwards;
+    opacity: 0;
+    transform: translateY(-30px);
+}
+
+@keyframes slideDown {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* --- FIN ANIMACIONES --- */
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+    .card {
+        padding: 25px;
+        margin: 20px auto;
+        max-width: 95%;
+    }
+    .title {
+        font-size: 2.8em;
+    }
+    .message {
+        font-size: 1em;
+    }
+    .polaroid-container {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .polaroid {
+        transform: rotate(0deg) !important;
+    }
+    .heart-icon {
+        font-size: 3em;
+    }
+    .confetti-button {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+    .signature {
+        font-size: 1.5em;
+    }
+    /* AJUSTES PARA LA CARTA EN MÓVIL */
+    .letter-envelope {
+        width: 90%;
+        height: 200px;
+    }
+    .envelope-flap {
+        height: 30%; 
+    }
+    .envelope-content {
+        top: 60%; /* Mismo ajuste de bajada que en escritorio */
+    }
+    .intro-text {
+        font-size: 2.2em; 
+    }
+    .click-prompt {
+        font-size: 1.1em;
+    }
+    .envelope-stamp {
+        top: 8px;
+        right: 10px;
+        font-size: 2.2em;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        border-width: 3px;
+        border-radius: 15px;
+    }
+    .title {
+        font-size: 2.2em;
+    }
+    .message {
+        font-size: 0.9em;
+    }
+    .polaroid img {
+        width: 150px;
+        height: 150px;
+    }
+    .confetti-button {
+        font-size: 0.9em;
+    }
+    .heart-icon {
+        font-size: 2.5em;
+    }
+    .letter-envelope {
+        height: 180px;
+    }
+    .intro-text {
+        font-size: 1.8em;
+    }
+    .click-prompt {
+        font-size: 1em;
+    }
+    .envelope-stamp {
+        font-size: 1.8em;
     }
 }

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 ¡Nuestro Mes Mágico! 💖</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+</head>
+<body>
+
+    <audio id="background-music" loop>
+        <source src="tu_cancion.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <div class="background-animation"></div>
+
+    <div id="intro-screen" class="intro-screen">
+        <div class="letter-envelope bounce-animation" onclick="openLetter()">
+            <div class="envelope-top"></div>
+            <div class="envelope-body">
+                <p class="intro-text">Tienes una carta especial...</p>
+                <p class="click-prompt">(Haz clic para abrir)</p>
+            </div>
+            <div class="envelope-stamp">💖</div>
+        </div>
+    </div>
+    
+    <div id="main-content" class="card hidden">
+        <div class="heart-icon beat-animation">💖</div>
+        <h1 class="title slide-down">¡Feliz Mesiversario, Mi Amor!</h1>
+        <p class="message typing-animation">
+            Un mes más a tu lado es un capítulo hermoso en nuestra historia. <br>
+            Gracias por cada risa, cada abrazo y cada momento mágico. <br>
+            ¡Te amo con todo mi corazón!
+        </p>
+        <div class="polaroid-container">
+            <div class="polaroid rotate-left">
+                <img src="https://picsum.photos/200/200?random=1" alt="Nuestro Momento 1">
+                <p>Nuestra primera cita <br> (o un recuerdo especial)</p>
+            </div>
+            <div class="polaroid rotate-right">
+                <img src="https://picsum.photos/200/200?random=2" alt="Nuestro Momento 2">
+                <p>Esa vez que reímos sin parar</p>
+            </div>
+        </div>
+        <button class="confetti-button" onclick="triggerConfetti()">🎉 ¡Celebremos! 🎉</button>
+        <p class="signature pulse">
+            Con un amor infinito,
+            <br>
+            [Tu Nombre o Apodo Cariñoso]
+        </p>
+        <p class="date">
+            17 de Noviembre, 2025
+        </p>
+    </div>
+
+    <canvas id="confetti-canvas" class="confetti-canvas"></canvas>
+
+    <script>
+        const card = document.getElementById('main-content');
+        const intro = document.getElementById('intro-screen');
+        const music = document.getElementById('background-music');
+
+        function typeWriterEffect() {
+            // El código del efecto máquina de escribir que ya teníamos
+            const messageElement = document.querySelector('.message');
+            const originalText = messageElement.innerHTML;
+            messageElement.innerHTML = '';
+            let i = 0;
+            const speed = 50;
+
+            function typeWriter() {
+                if (i < originalText.length) {
+                    if (originalText.substring(i, i + 4) === '<br>') {
+                        messageElement.innerHTML += '<br>';
+                        i += 4;
+                    } else {
+                        messageElement.innerHTML += originalText.charAt(i);
+                        i++;
+                    }
+                    setTimeout(typeWriter, speed);
+                }
+            }
+            typeWriter();
+        }
+
+        function openLetter() {
+            // 1. Oculta la intro y muestra la carta
+            intro.classList.add('hide-intro');
+            card.classList.remove('hidden');
+            card.classList.add('fade-in');
+            
+            // 2. Inicia la música (debe ser después de una interacción del usuario)
+            music.play().catch(error => {
+                console.log("Error al reproducir la música: ", error);
+                // Si falla, el navegador puede haberlo bloqueado.
+                // En móviles, a menudo se requiere un segundo clic/tap.
+            });
+            
+            // 3. Inicia el efecto de escritura después de que la carta se abre
+            setTimeout(typeWriterEffect, 1000); 
+
+            // 4. Espera a que termine la animación de intro para removerla del flujo
+            setTimeout(() => {
+                intro.style.display = 'none';
+            }, 1000); // Coincide con la duración de la transición CSS
+        }
+
+        function triggerConfetti() {
+            var confettiSettings = { target: 'confetti-canvas' };
+            var confetti = new ConfettiGenerator(confettiSettings);
+            confetti.render();
+            setTimeout(() => {
+                confetti.clear();
+            }, 5000);
+        }
+        
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💖 ¡Nuestro Mes Mágico! 💖</title>
+    <title>💖 ¡Un Mes Más Juntos Amor! 💖</title>
     <link rel="stylesheet" href="styles.css"> 
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
@@ -11,7 +11,7 @@
 <body>
 
     <audio id="background-music" loop>
-        <source src="tu_cancion.mp3" type="audio/mpeg">
+        <source src="Piso 21 .mp3" type="audio/mpeg">
         Tu navegador no soporta el elemento de audio.
     </audio>
 
@@ -40,22 +40,22 @@
         </p>
         <div class="polaroid-container">
             <div class="polaroid rotate-left">
-                <img src="https://picsum.photos/200/200?random=1" alt="Nuestro Momento 1">
-                <p>Nuestra primera cita</p>
+                <img src="foto2.jpeg" alt="Nuestro Momento 1">
+                <p>Noche de peli + Pizza💖💖</p>
             </div>
             <div class="polaroid rotate-right">
-                <img src="https://picsum.photos/200/200?random=2" alt="Nuestro Momento 2">
-                <p>Esa vez que reímos sin parar</p>
+                <img src="foto1.jpeg" alt="Nuestro Momento 2">
+                <p>Una de tantas 💖💖 </p>
             </div>
         </div>
         <button class="confetti-button" onclick="triggerConfetti()">🎉 ¡Celebremos! 🎉</button>
         <p class="signature pulse">
-            Con un amor infinito,
+            Te Amo Muchisimo Mi Momolita.
             <br>
-            [Tu Nombre o Apodo Cariñoso]
+            Tu Momolo
         </p>
         <p class="date">
-            17 de Noviembre, 2025
+            19 de Noviembre, 2025
         </p>
     </div>
 
@@ -78,7 +78,7 @@
                 if (i < originalText.length) {
                     if (originalText.substring(i, i + 4) === '<br>') {
                         messageElement.innerHTML += '<br>';
-                        i += 4; // Salta los 4 caracteres de <br>
+                        i += 4; 
                     } else {
                         messageElement.innerHTML += originalText.charAt(i);
                         i++;
@@ -90,31 +90,31 @@
         }
 
         function openLetter() {
-            // Oculta la intro
+            
             intro.classList.add('hide-intro');
-            // Activa la animación de apertura de la solapa
+            
             document.querySelector('.envelope-flap').classList.add('open');
 
             setTimeout(() => {
-                // Muestra la tarjeta principal
+                
                 card.classList.remove('hidden');
                 card.classList.add('fade-in');
                 
-                // Inicia la música
+                
                 music.play().catch(error => {
                     console.log("Error al reproducir la música: ", error);
                 });
                 
-                // Inicia el efecto de escritura
+                
                 setTimeout(typeWriterEffect, 1000); 
                 
-                // Oculta completamente la intro después de la transición
+               
                 intro.style.display = 'none';
             }, 800); 
         }
 
         function triggerConfetti() {
-            // Configuración del confeti más grande y denso
+           
             var confettiSettings = { 
                 target: 'confetti-canvas', 
                 max: 150, 
@@ -125,7 +125,7 @@
             };
             var confetti = new ConfettiGenerator(confettiSettings);
             confetti.render();
-            // Lo limpia después de 5 segundos
+            
             setTimeout(() => {
                 confetti.clear();
             }, 5000); 
